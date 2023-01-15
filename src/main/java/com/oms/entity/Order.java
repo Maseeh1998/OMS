@@ -1,18 +1,24 @@
 package com.oms.entity;
 
+import jakarta.validation.constraints.NotNull;
+
 public class Order {
+	@NotNull
 	private String item;
-	private int price;
+	private float price;
 	public String getItem() {
 		return item;
 	}
 	public void setItem(String item) {
 		this.item = item;
 	}
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(float price) {
+		if(price<0) {
+			throw new IllegalArgumentException("Price cannot be negative");
+		}
 		this.price = price;
 	}
 
