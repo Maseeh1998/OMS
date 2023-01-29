@@ -1,11 +1,13 @@
 package com.oms;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.oms.entity.Order;
 import com.oms.service.OrderService;
@@ -18,6 +20,7 @@ public class OrderController { //front end
 	@Autowired
 	OrderService orderService; //dependency Injection ( spring is creating the object) 
 	@PostMapping("/order")
+	@ResponseStatus(code = HttpStatus.CREATED)
 	String createOrder(@RequestBody @Valid Order order, BindingResult bindingresult) {
 		if(bindingresult.hasErrors()) {
 			throw new IllegalArgumentException("Invalid Data");
