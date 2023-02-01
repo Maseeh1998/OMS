@@ -1,11 +1,18 @@
 package com.oms;
+
+
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,44 +21,50 @@ import com.oms.service.OrderService;
 
 import jakarta.validation.Valid;
 
-
 @RestController
-public class OrderController { //front end
+public class OrderController { // front end
 	@Autowired
-	OrderService orderService; //dependency Injection ( spring is creating the object) 
+	OrderService orderService; // dependency Injection ( spring is creating the object)
+	private void validateModel(Errors bindingresult) {
+		if (bindingresult.hasErrors()) {
+			throw new IllegalArgumentException("Invalid Data, Something went wrong!");
+		}
+		
+	}
 	@PostMapping("/order")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	String createOrder(@RequestBody @Valid Order order, BindingResult bindingresult) {
-		if(bindingresult.hasErrors()) {
-			throw new IllegalArgumentException("Invalid Data");
-		}
+		validateModel(bindingresult);
 		System.out.println(order);
 		return orderService.createOrder(order);
-		//System.out.println(order.getItem());
-		//System.out.println(order.getPrice());
-		}
-	@GetMapping("/order")
-	String getOrder() {
-		return "Order Created";
+		// System.out.println(order.getItem());
+		// System.out.println(order.getPrice());
 	}
-//id is a path param hence we use path variable 	
-	@PostMapping("/order/{id}") 
-	String updateOrder(@PathVariable("id") int orderId){
-		System.out.println(orderId);
-		return "Order updated";
-	}
-	
 
-    @DeleteMapping("/order/{id}")	
-	String deleteOrder(@PathVariable("id") String orderId){
-    	System.out.println(orderId);
-		return "Order deleted";
-		
+	@GetMapping("/order")
+	List <Order> getOrders() {
+		return orderService.getOrders();
 	}
 	
+	@GetMapping("/order/{id}")
+	Order getOrder(@PathVariable("id") int orderId) {
+		return orderService.getOrder();
+	}
+
+//id is a path param hence we use path variable 	
+	@PutMapping("/order/{id}")
+	void updateOrder(@RequestBody @Valid Order order, @PathVariable("id") int orderId, BindingResult bindingresult) {
+		validateModel(bindingresult);
+		System.out.println(orderId);
+		 orderService.updateOrder(orderId);
+	}
+
+	@DeleteMapping("/order/{id}")
+	 void deleteOrder(@PathVariable("id") int orderId) {
+		System.out.println(orderId);
+		//return orderService.deleteOrder();
+		orderService.deleteOrder(orderId);
+
+	}
 
 }
-
-
-
-
