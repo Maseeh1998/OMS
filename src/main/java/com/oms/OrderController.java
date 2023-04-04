@@ -3,6 +3,7 @@ package com.oms;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,20 +48,21 @@ public class OrderController { // front end
 	}
 	
 	@GetMapping("/order/{id}")
-	Order getOrder(@PathVariable("id") int orderId) {
-		return orderService.getOrder();
+	Optional<Order> getOrder(@PathVariable("id") String orderId) {
+		return orderService.getOrder(orderId);
 	}
 
 //id is a path param hence we use path variable 	
 	@PutMapping("/order/{id}")
-	void updateOrder(@RequestBody @Valid Order order, @PathVariable("id") int orderId, BindingResult bindingresult) {
-		validateModel(bindingresult);
-		System.out.println(orderId);
-		 orderService.updateOrder(orderId);
+	void updateOrder(@RequestBody @Valid Order order, @PathVariable("id") String orderId, BindingResult bindingresult) {
+		 validateModel(bindingresult);
+		 System.out.println(orderId);
+		 order.setId(orderId);
+		 orderService.updateOrder(order);
 	}
 
 	@DeleteMapping("/order/{id}")
-	 void deleteOrder(@PathVariable("id") int orderId) {
+	 void deleteOrder(@PathVariable("id") String orderId) {
 		System.out.println(orderId);
 		//return orderService.deleteOrder();
 		orderService.deleteOrder(orderId);

@@ -1,8 +1,9 @@
 package com.oms.service;
 
 
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,24 +21,20 @@ public class OrderService {
 	}
 
 	public List<Order> getOrders() {
-		// TODO Auto-generated method stub
-		return new ArrayList<Order>();
+		return orderRepository.findAll();
 	}
 
-	public void updateOrder(int orderId) {
-		// TODO Auto-generated method stub
-		System.out.println("Order updated");
+	public void updateOrder(Order order) {
+		orderRepository.save(order);	
+	}
+	
+	public void deleteOrder(String orderId) {
+		orderRepository.deleteById(orderId);
 		
 	}
 
-	public void deleteOrder(int orderId) {
-		// TODO Auto-generated method stub
-		System.out.println("Deleted the order");
-	}
-
-	public Order getOrder() {
-		// TODO Auto-generated method stub
-		return new Order();
+	public Optional<Order> getOrder(String orderId) {
+		return orderRepository.findById(orderId);
 	}
 
 	
