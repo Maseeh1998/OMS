@@ -4,13 +4,18 @@ package com.oms.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.oms.entity.Order;
+import com.oms.repo.OrderRepository;
 
 @Service
 public class OrderService {
+	@Autowired
+	OrderRepository orderRepository;
 	public String createOrder(Order order) {
-		return " Order Created ";
+		Order savedorder = orderRepository.save(order);
+		return savedorder.getId();
 		
 	}
 

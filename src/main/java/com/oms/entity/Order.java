@@ -1,5 +1,7 @@
 package com.oms.entity;
 
+import org.springframework.data.annotation.Id;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -9,7 +11,8 @@ public class Order {
 	private String item;
 	@NotNull
 	private float price;
-	private int id;
+	@Id
+	private String id;
 	public String getItem() {
 		return item;
 	}
@@ -25,11 +28,11 @@ public class Order {
 		}
 		this.price = price;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 }

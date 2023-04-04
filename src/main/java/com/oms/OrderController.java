@@ -37,7 +37,7 @@ public class OrderController { // front end
 		validateModel(bindingresult);
 		System.out.println(order);
 		return orderService.createOrder(order);
-		// System.out.println(order.getItem());
+		//System.out.println(order.getItem());
 		// System.out.println(order.getPrice());
 	}
 
