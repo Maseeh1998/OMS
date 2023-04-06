@@ -4,6 +4,8 @@ package com.oms;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,8 @@ import com.oms.service.OrderService;
 import jakarta.validation.Valid;
 
 @RestController
-public class OrderController { // front end
+public class OrderController {// front end
+	Logger logger = Logger.getLogger(OrderController.class.getName());
 	@Autowired
 	OrderService orderService; // dependency Injection ( spring is creating the object)
 	private void validateModel(Errors bindingresult) {
@@ -44,6 +47,7 @@ public class OrderController { // front end
 
 	@GetMapping("/order")
 	List <Order> getOrders() {
+		logger.log(Level.WARNING,orderService.hashCode()+"printed");
 		return orderService.getOrders();
 	}
 	

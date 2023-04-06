@@ -16,8 +16,7 @@ public class OrderService {
 	OrderRepository orderRepository;
 	public String createOrder(Order order) {
 		Order savedorder = orderRepository.save(order);
-		return savedorder.getId();
-		
+		return savedorder.getId();	
 	}
 
 	public List<Order> getOrders() {
@@ -29,8 +28,7 @@ public class OrderService {
 	}
 	
 	public void deleteOrder(String orderId) {
-		orderRepository.deleteById(orderId);
-		
+		orderRepository.deleteById(orderId);	
 	}
 
 	public Optional<Order> getOrder(String orderId) {
